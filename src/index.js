@@ -47,10 +47,6 @@ const showTask = (i) => {
 function component() {
   const main = document.querySelector('.container');
 
-  const h1 = document.createElement('h1');
-  h1.textContent = 'To-do list';
-  main.appendChild(h1);
-
   const inputText = document.createElement('input');
   inputText.setAttribute('type', 'text');
   inputText.setAttribute('placeholder', 'Add to your list...');
