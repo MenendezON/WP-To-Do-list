@@ -1,3 +1,4 @@
-window.addEventListener('DOMContentLoaded', ()=>{
-    const body = document.querySelector('body');
-})
+window.addEventListener('DOMContentLoaded', () => {
+  const body = document.querySelector('body');
+  body.innerHTML = 'Hello';
+});
