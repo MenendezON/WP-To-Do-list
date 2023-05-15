@@ -17,7 +17,7 @@
   "bugs": {
     "url": "https://github.com/MenendezON/WP-To-Do-list/issues"
   },
-  "homepage": "https://github.com/MenendezON/WP-To-Do-list#readme",
+  "homepage": "https://github.com/MenendezON/WP-To-Do-list/dist/index.html",
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "css-loader": "^6.7.3",
