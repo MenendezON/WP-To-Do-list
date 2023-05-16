@@ -5,10 +5,9 @@ const tasks = JSON.parse(localStorage.getItem('datas')) ?? [];
 const validateForm = (event) => {
   event.preventDefault();
   const task = document.getElementById('newTask');
-  const taskLength = tasks.length;
   if (task && task.value !== '') {
     const newTask = {
-      index: taskLength,
+      index: tasks.length,
       completed: false,
       description: task && task.value,
     };
