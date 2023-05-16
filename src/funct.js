@@ -2,7 +2,7 @@
 import dataLoading from './index.js';
 
 const validateForm = (event) => {
-const tasks = JSON.parse(localStorage.getItem('datas')) ?? [];
+  const tasks = JSON.parse(localStorage.getItem('datas')) ?? [];
   event.preventDefault();
   const task = document.getElementById('newTask');
   if (task && task.value !== '') {
