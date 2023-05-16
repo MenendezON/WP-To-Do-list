@@ -1,29 +1,20 @@
 import './style.css';
 import Icon from './option.png';
+/* eslint-disable-next-line import/no-cycle */
+import validateForm from './funct.js';
+import removeTask from './remove.js';
 
-const tasks = [
-  {
-    description: 'Create a new repository',
-    completed: false,
-    index: 0,
-  },
-  {
-    description: 'Create a local webpack project',
-    completed: true,
-    index: 1,
-  },
-  {
-    description: 'Checkout the linters',
-    completed: true,
-    index: 2,
-  },
-  {
-    description: 'Push your project on Github',
-    completed: false,
-    index: 3,
-  },
-];
+let tasks = [];
+export const main = document.querySelector('.container');
+const dataLoading = () => {
+  tasks = JSON.parse(localStorage.getItem('datas')) ?? [];
+  main.innerHTML = '';
+  /* eslint-disable */
+  document.body.appendChild(component());
+  /* eslint-enable */
+};
 
+export default dataLoading;
 const showTask = (i) => {
   const li = document.createElement('li');
   const inputCheckbox = document.createElement('input');
@@ -33,33 +24,59 @@ const showTask = (i) => {
   } else {
     inputCheckbox.setAttribute('checked', 'checked');
   }
-  const paragraph = document.createElement('p');
-  paragraph.textContent = tasks[i].description;
+  const paragraph = document.createElement('input');
+  paragraph.setAttribute('type', 'text');
+  paragraph.setAttribute('id', 'taskField');
+  paragraph.classList.add('taskField');
+  paragraph.setAttribute('value', tasks[i].description);
+  paragraph.addEventListener('change', () => {
+    tasks[i].description = paragraph.value;
+    localStorage.setItem('datas', JSON.stringify(tasks));
+    dataLoading();
+  });
   li.appendChild(inputCheckbox);
   li.appendChild(paragraph);
   const myIcon = new Image();
   myIcon.src = Icon;
   myIcon.setAttribute('alt', ' ');
+  myIcon.classList.add('delete');
+  myIcon.addEventListener('click', () => {
+    removeTask(i);
+    dataLoading();
+  });
   li.appendChild(myIcon);
   return li;
 };
+const component = () => {
+  const h1 = document.createElement('h1');
+  h1.textContent = 'To-do list';
+  main.appendChild(h1);
 
-function component() {
-  const main = document.querySelector('.container');
+  const form = document.createElement('form');
+  form.setAttribute('action', '#');
+  form.setAttribute('id', 'taskForm');
+  form.addEventListener('submit', validateForm);
 
   const inputText = document.createElement('input');
   inputText.setAttribute('type', 'text');
   inputText.setAttribute('placeholder', 'Add to your list...');
+  inputText.setAttribute('value', 'new task');
   inputText.setAttribute('id', 'newTask');
-  main.appendChild(inputText);
 
-  tasks.forEach((tsk, i) => {
-    if (i >= 0) showTask(i);
-  });
+  const inputSubmit = document.createElement('input');
+  inputSubmit.setAttribute('type', 'submit');
+  inputSubmit.setAttribute('value', '>');
+
+  form.appendChild(inputText);
+  form.appendChild(inputSubmit);
+
+  main.appendChild(form);
 
   const ul = document.createElement('ul');
   tasks.forEach((tsk, i) => {
-    if (i >= 0) { ul.appendChild(showTask(i)); }
+    if (i >= 0) {
+      ul.appendChild(showTask(i));
+    }
   });
 
   main.appendChild(ul);
@@ -71,6 +88,8 @@ function component() {
   main.appendChild(inputButton);
 
   return main;
-}
+};
 
-document.body.appendChild(component());
+window.addEventListener('DOMContentLoaded', () => {
+  dataLoading();
+});
