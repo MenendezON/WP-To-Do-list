@@ -1,8 +1,8 @@
 /* eslint-disable-next-line import/no-cycle */
 import dataLoading from './index.js';
 
-const tasks = JSON.parse(localStorage.getItem('datas')) ?? [];
 const validateForm = (event) => {
+const tasks = JSON.parse(localStorage.getItem('datas')) ?? [];
   event.preventDefault();
   const task = document.getElementById('newTask');
   if (task && task.value !== '') {
