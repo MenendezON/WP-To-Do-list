@@ -1,15 +1,16 @@
-import { dataLoading } from "./index.js";
+/* eslint-disable-next-line import/no-cycle */
+import dataLoading from './index.js';
 
-export let tasks = JSON.parse(localStorage.getItem('datas'));
+const tasks = JSON.parse(localStorage.getItem('datas'));
 
-export const validateForm = (event) => {
+const validateForm = (event) => {
   event.preventDefault();
   const task = document.getElementById('newTask');
   if (task && task.value !== '') {
     const newTask = {
       index: tasks.length,
       completed: false,
-      description: task && task.value
+      description: task && task.value,
     };
     task.value = '';
 
@@ -17,12 +18,10 @@ export const validateForm = (event) => {
     localStorage.setItem('datas', JSON.stringify(tasks));
 
     dataLoading();
+
     return false;
   }
   return true;
 };
 
-export const removeTask = (i) => {
-  tasks = tasks.filter((task) => task.description !== tasks[i].description);
-  localStorage.setItem('datas', JSON.stringify(tasks));
-};
+export default validateForm;

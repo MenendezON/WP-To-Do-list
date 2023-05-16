@@ -1,17 +1,20 @@
 import './style.css';
 import Icon from './option.png';
-import { validateForm } from './funct.js';
-import { removeTask } from './funct.js';
+/* eslint-disable-next-line import/no-cycle */
+import validateForm from './funct.js';
+import removeTask from './remove.js';
 
 let tasks = [];
 export const main = document.querySelector('.container');
-
-export let dataLoading = () => {
+const dataLoading = () => {
   tasks = JSON.parse(localStorage.getItem('datas')) ?? [];
   main.innerHTML = '';
+  /* eslint-disable */
   document.body.appendChild(component());
-}
+  /* eslint-enable */
+};
 
+export default dataLoading;
 const showTask = (i) => {
   const li = document.createElement('li');
   const inputCheckbox = document.createElement('input');
@@ -21,8 +24,16 @@ const showTask = (i) => {
   } else {
     inputCheckbox.setAttribute('checked', 'checked');
   }
-  const paragraph = document.createElement('p');
-  paragraph.textContent = tasks[i].description;
+  const paragraph = document.createElement('input');
+  paragraph.setAttribute('type', 'text');
+  paragraph.setAttribute('id', 'taskField');
+  paragraph.classList.add('taskField');
+  paragraph.setAttribute('value', tasks[i].description);
+  paragraph.addEventListener('change', () => {
+    tasks[i].description = paragraph.value;
+    localStorage.setItem('datas', JSON.stringify(tasks));
+    dataLoading();
+  });
   li.appendChild(inputCheckbox);
   li.appendChild(paragraph);
   const myIcon = new Image();
@@ -30,14 +41,13 @@ const showTask = (i) => {
   myIcon.setAttribute('alt', ' ');
   myIcon.classList.add('delete');
   myIcon.addEventListener('click', () => {
-    removeTask(i);  
+    removeTask(i);
     dataLoading();
   });
   li.appendChild(myIcon);
   return li;
 };
-
-export function component() {
+const component = () => {
   const h1 = document.createElement('h1');
   h1.textContent = 'To-do list';
   main.appendChild(h1);
@@ -62,13 +72,11 @@ export function component() {
 
   main.appendChild(form);
 
-  tasks.forEach((tsk, i) => {
-    if (i >= 0) showTask(i);
-  });
-
   const ul = document.createElement('ul');
   tasks.forEach((tsk, i) => {
-    if (i >= 0) { ul.appendChild(showTask(i)); }
+    if (i >= 0) {
+      ul.appendChild(showTask(i));
+    }
   });
 
   main.appendChild(ul);
@@ -80,9 +88,8 @@ export function component() {
   main.appendChild(inputButton);
 
   return main;
-}
+};
 
 window.addEventListener('DOMContentLoaded', () => {
-  tasks = JSON.parse(localStorage.getItem('datas')) ?? [];
   dataLoading();
 });
