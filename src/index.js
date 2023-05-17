@@ -3,6 +3,7 @@ import Icon from './option.png';
 /* eslint-disable-next-line import/no-cycle */
 import validateForm from './funct.js';
 import removeTask from './remove.js';
+import removeAllTask from './removeAll.js';
 
 let tasks = [];
 export const main = document.querySelector('.container');
@@ -18,15 +19,23 @@ export default dataLoading;
 const showTask = (i) => {
   const li = document.createElement('li');
   const inputCheckbox = document.createElement('input');
+  const paragraph = document.createElement('input');
   inputCheckbox.setAttribute('type', 'checkbox');
   if (tasks[i].completed === false) {
     inputCheckbox.removeAttribute('checked');
   } else {
     inputCheckbox.setAttribute('checked', 'checked');
   }
-  const paragraph = document.createElement('input');
+  inputCheckbox.addEventListener('change', () => {
+    if (inputCheckbox.checked) {
+      paragraph.classList.add('extra');
+    }
+    tasks[i].completed = inputCheckbox.checked;
+    localStorage.setItem('datas', JSON.stringify(tasks));
+    dataLoading();
+  });
   paragraph.setAttribute('type', 'text');
-  paragraph.setAttribute('id', 'taskField');
+  paragraph.setAttribute('id', `taskField${i}`);
   paragraph.classList.add('taskField');
   paragraph.setAttribute('value', tasks[i].description);
   paragraph.addEventListener('change', () => {
@@ -84,7 +93,10 @@ const component = () => {
   const inputButton = document.createElement('input');
   inputButton.setAttribute('type', 'button');
   inputButton.setAttribute('value', 'Clear all completd');
-
+  inputButton.addEventListener('click', () => {
+    removeAllTask();
+    dataLoading();
+  });
   main.appendChild(inputButton);
 
   return main;
