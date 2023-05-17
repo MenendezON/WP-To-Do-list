@@ -1,6 +1,5 @@
 const validateForm = () => {
   const tasks = JSON.parse(localStorage.getItem('datas')) ?? [];
-  // event.preventDefault();
   const task = document.getElementById('newTask');
   if (task && task.value !== '') {
     const newTask = {
