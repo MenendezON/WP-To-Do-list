@@ -169,17 +169,13 @@ Feel free to check the [issues page](../../issues/).
 
 ## ⭐️ Show your support <a name="support"></a>
 
-> Write a message to encourage readers to support your project
-
-If you like this project...
+If you like this project, don't hesitate to give me a start(⭐️)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## 🙏 Acknowledgments <a name="acknowledgements"></a>
 
-> Give credit to everyone who inspired your codebase.
-
-I would like to thank...
+I would like to thank the reviewers and the users of stackoverflow.com who help me going through when I struggled.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
