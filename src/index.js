@@ -1,8 +1,8 @@
 import './style.css';
 import Icon from './option.png';
-/* eslint-disable-next-line import/no-cycle */
 import validateForm from './funct.js';
 import removeTask from './remove.js';
+import removeAllTask from './removeAll.js';
 
 let tasks = [];
 export const main = document.querySelector('.container');
@@ -18,13 +18,21 @@ export default dataLoading;
 const showTask = (i) => {
   const li = document.createElement('li');
   const inputCheckbox = document.createElement('input');
+  const paragraph = document.createElement('input');
   inputCheckbox.setAttribute('type', 'checkbox');
   if (tasks[i].completed === false) {
     inputCheckbox.removeAttribute('checked');
   } else {
     inputCheckbox.setAttribute('checked', 'checked');
   }
-  const paragraph = document.createElement('input');
+  inputCheckbox.addEventListener('change', () => {
+    if (inputCheckbox.checked) {
+      paragraph.classList.add('extra');
+    }
+    tasks[i].completed = inputCheckbox.checked;
+    localStorage.setItem('datas', JSON.stringify(tasks));
+    dataLoading();
+  });
   paragraph.setAttribute('type', 'text');
   paragraph.setAttribute('id', 'taskField');
   paragraph.classList.add('taskField');
@@ -55,12 +63,14 @@ const component = () => {
   const form = document.createElement('form');
   form.setAttribute('action', '#');
   form.setAttribute('id', 'taskForm');
-  form.addEventListener('submit', validateForm);
+  form.addEventListener('submit', () => {
+    validateForm();
+    dataLoading();
+  });
 
   const inputText = document.createElement('input');
   inputText.setAttribute('type', 'text');
-  inputText.setAttribute('placeholder', 'Add to your list...');
-  inputText.setAttribute('value', 'new task');
+  inputText.setAttribute('placeholder', 'Add a new task');
   inputText.setAttribute('id', 'newTask');
 
   const inputSubmit = document.createElement('input');
@@ -84,7 +94,10 @@ const component = () => {
   const inputButton = document.createElement('input');
   inputButton.setAttribute('type', 'button');
   inputButton.setAttribute('value', 'Clear all completd');
-
+  inputButton.addEventListener('click', () => {
+    removeAllTask();
+    dataLoading();
+  });
   main.appendChild(inputButton);
 
   return main;
