@@ -1,6 +1,5 @@
 import './style.css';
 import Icon from './option.png';
-/* eslint-disable-next-line import/no-cycle */
 import validateForm from './funct.js';
 import removeTask from './remove.js';
 import removeAllTask from './removeAll.js';
@@ -35,7 +34,7 @@ const showTask = (i) => {
     dataLoading();
   });
   paragraph.setAttribute('type', 'text');
-  paragraph.setAttribute('id', `taskField${i}`);
+  paragraph.setAttribute('id', 'taskField');
   paragraph.classList.add('taskField');
   paragraph.setAttribute('value', tasks[i].description);
   paragraph.addEventListener('change', () => {
@@ -64,12 +63,14 @@ const component = () => {
   const form = document.createElement('form');
   form.setAttribute('action', '#');
   form.setAttribute('id', 'taskForm');
-  form.addEventListener('submit', validateForm);
+  form.addEventListener('submit', () => {
+    validateForm();
+    dataLoading();
+  });
 
   const inputText = document.createElement('input');
   inputText.setAttribute('type', 'text');
-  inputText.setAttribute('placeholder', 'Add to your list...');
-  inputText.setAttribute('value', 'new task');
+  inputText.setAttribute('placeholder', 'Add a new task');
   inputText.setAttribute('id', 'newTask');
 
   const inputSubmit = document.createElement('input');

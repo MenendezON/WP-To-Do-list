@@ -3,8 +3,7 @@ const removeAllTask = () => {
 
   tasks = tasks.filter((task) => !task.completed);
 
-  /* eslint-disable no-plusplus */
-  for (let i = 0; i < tasks.length; i++) {
+  for (let i = 0; i < tasks.length; i += 1) {
     tasks[i].index = i;
   }
   localStorage.setItem('datas', JSON.stringify(tasks));
